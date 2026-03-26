@@ -3,8 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 
-export interface LogoUploaderProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface LogoUploaderProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'type'
+> {
   label?: string;
 }
 
@@ -25,7 +27,7 @@ export default function LogoUploader({
           className="mb-1"
           width={48}
           height={48}
-          src="/icons/upload.svg"
+          src="/upload.svg"
           alt="upload"
         />
         {placeholder && (
