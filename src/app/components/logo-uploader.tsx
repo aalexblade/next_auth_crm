@@ -8,6 +8,8 @@ export interface LogoUploaderProps extends Omit<
   'type'
 > {
   label?: string;
+  placeholder?: string;
+  square?: boolean;
 }
 
 export default function LogoUploader({
