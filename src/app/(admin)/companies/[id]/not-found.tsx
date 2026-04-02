@@ -3,9 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 
-export interface NotFoudProps {}
+export interface NotFoundProps {}
 
-export default function Notfourd({}: NotFoudProps) {
+export default function NotFound({}: NotFoundProps) {
   return (
     <div>
       <p>Could not found company</p>
