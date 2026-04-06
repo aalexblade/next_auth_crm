@@ -24,6 +24,7 @@ export default function Sidebar({}: SidebarProps) {
           height={25}
           src="/icons/logo.svg"
           alt="logo"
+          priority
         />
         <ul className="space-y-7">
           <SidebarItem
@@ -46,6 +47,7 @@ export default function Sidebar({}: SidebarProps) {
         <button
           className="flex items-center gap-2 p-6 mt-auto mx-auto"
           onClick={handleExitClick}
+          aria-label="Exit to home page"
         >
           <Image
             width={18}

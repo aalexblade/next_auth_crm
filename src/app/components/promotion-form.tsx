@@ -3,7 +3,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createPromotion, getCompany } from '@/lib/api';
+import { createPromotion, getCompany, Promotion } from '@/lib/api';
 import Button from '@/app/components/button';
 import InputField from '@/app/components/input-field';
 import LogoUploader from '@/app/components/logo-uploader';
@@ -39,7 +39,7 @@ export default function PromotionForm({
   });
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: createPromotion,
+    mutationFn: (data: Omit<Promotion, 'id'>) => createPromotion(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['promotions', companyId],

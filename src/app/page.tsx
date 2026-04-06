@@ -1,4 +1,19 @@
+import type { Metadata } from 'next';
 import LoginForm from '@/app/components/login-form';
+
+export const metadata: Metadata = {
+  title: 'CRM Login | Secure Admin Dashboard',
+  description:
+    'Sign in to your CRM admin dashboard to manage companies, promotions, and sales data securely.',
+  keywords: [
+    'CRM login',
+    'admin dashboard',
+    'companies',
+    'promotions',
+    'sales management',
+    'secure login',
+  ],
+};
 
 export default function Home() {
   return (
@@ -12,9 +27,9 @@ export default function Home() {
             Sign in and continue managing your companies
           </h1>
           <p className="text-base leading-7 text-slate-600">
-            Use the form on the right to access the admin dashboard. If you are
-            a returning user, simply sign in and start managing promotions,
-            companies, and sales data.
+            Access the secure CRM admin portal to manage company profiles,
+            promotions, and sales analytics. Use the form on the right to sign
+            in and keep your business data up to date.
           </p>
         </section>
 

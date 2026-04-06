@@ -1,13 +1,24 @@
 'use server';
 import { signIn } from '@auth';
-import { AuthError } from 'next-auth';
 
-export async function authenticate(formData: FormData) {
-  try {
-    await signIn('credentials', formData);
-  } catch (error) {
-    if (error instanceof AuthError) {
-    }
-    throw error;
+export async function authenticate(credentials: {
+  email: string;
+  password: string;
+}) {
+  const redirectUrl = await signIn('credentials', {
+    ...credentials,
+    redirect: false,
+    redirectTo: '/dashboard',
+  });
+
+  if (typeof redirectUrl !== 'string') {
+    throw new Error('Authentication failed. Please check your credentials.');
   }
+
+  const parsedUrl = new URL(redirectUrl, 'http://localhost');
+  if (parsedUrl.searchParams.get('error')) {
+    throw new Error('Authentication failed. Please check your credentials.');
+  }
+
+  return { ok: true };
 }

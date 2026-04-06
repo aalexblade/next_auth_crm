@@ -20,6 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        // Only accept the test user credentials
         if (
           credentials?.email === TEST_USER.email &&
           credentials?.password === TEST_PASSWORD
@@ -27,6 +28,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return TEST_USER;
         }
 
+        // Return null for invalid credentials (this will cause signIn to throw an error)
         return null;
       },
     }),

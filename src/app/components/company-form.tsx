@@ -4,6 +4,7 @@ import React from 'react';
 import { Form, Formik } from 'formik';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  Company,
   CompanyStatus,
   createCompany,
   getCategories,
@@ -52,7 +53,8 @@ export default function CompanyForm({ onSubmit }: CompanyFormProps) {
   });
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: createCompany,
+    mutationFn: (data: Omit<Company, 'id' | 'hasPromotions'>) =>
+      createCompany(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['companies'],

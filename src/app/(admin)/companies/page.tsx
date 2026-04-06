@@ -2,7 +2,10 @@ import React from 'react';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getCompanies } from '@/lib/api';
 import getQueryClient from '@/lib/utils/getQueryClient';
-import CompanyTable from '@/app/components/company-table';
+import dynamic from 'next/dynamic';
+
+// Dynamically import CompanyTable for better performance
+const CompanyTable = dynamic(() => import('@/app/components/company-table'));
 
 export interface PageProps {}
 

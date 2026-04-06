@@ -12,7 +12,9 @@ export default function ErrorComponent({ error, reset }: ErrorComponentProps) {
   return (
     <div>
       <p>{`Something went wrong. ${error.message}`}</p>
-      <Button onClick={() => reset()}>Try again</Button>
+      <Button onClick={() => reset()} aria-label="Retry loading the dashboard">
+        Try again
+      </Button>
     </div>
   );
 }

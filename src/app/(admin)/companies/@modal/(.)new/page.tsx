@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import CompanyFormModal from '@/app/components/company-form-modal';
+import dynamic from 'next/dynamic';
+
+// Dynamically import CompanyFormModal for better performance
+const CompanyFormModal = dynamic(
+  () => import('@/app/components/company-form-modal'),
+  { ssr: false },
+);
 
 export interface PageProps {}
 

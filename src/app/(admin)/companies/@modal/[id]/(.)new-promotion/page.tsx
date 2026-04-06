@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import PromotionFormModal from '@/app/components/promotion-form-modal';
+import dynamic from 'next/dynamic';
+
+// Dynamically import PromotionFormModal for better performance
+const PromotionFormModal = dynamic(
+  () => import('@/app/components/promotion-form-modal'),
+  { ssr: false },
+);
 
 export interface PageProps {
   params: { id: string };

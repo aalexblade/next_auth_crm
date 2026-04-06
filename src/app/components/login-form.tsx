@@ -21,6 +21,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function LoginForm({}: LoginFormProps) {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,11 +31,14 @@ export default function LoginForm({}: LoginFormProps) {
     setIsLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append('email', values.email);
-      formData.append('password', values.password);
+      const result = await authenticate({
+        email: values.email,
+        password: values.password,
+      });
 
-      await authenticate(formData);
+      if (result.ok) {
+        router.push('/dashboard');
+      }
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : 'Authentication failed';
@@ -53,12 +57,17 @@ export default function LoginForm({}: LoginFormProps) {
         </p>
         <div className="mt-4 rounded-2xl bg-slate-50 p-4 text-sm text-slate-700">
           <p className="font-medium text-slate-900">Test login credentials</p>
-          <p>
-            Email: <span className="font-semibold">test@example.com</span>
-          </p>
-          <p>
-            Password: <span className="font-semibold">password123</span>
-          </p>
+          <div className="mt-2 space-y-2">
+            <div>
+              <p className="font-semibold text-green-700">✅ Success:</p>
+              <p>
+                Email: <span className="font-semibold">test@example.com</span>
+              </p>
+              <p>
+                Password: <span className="font-semibold">password123</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -69,7 +78,10 @@ export default function LoginForm({}: LoginFormProps) {
       )}
 
       <Formik
-        initialValues={{ email: 'test@example.com', password: 'password123' }}
+        initialValues={{
+          email: 'test@example.com',
+          password: 'password123',
+        }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
