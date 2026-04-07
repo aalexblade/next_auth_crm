@@ -2,7 +2,12 @@ import React from 'react';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Providers from '@/app/components/providers';
 import './globals.css';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next'; // Додали імпорт Viewport
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: 'CRM Dashboard | Manage Companies & Promotions',
@@ -19,7 +24,6 @@ export const metadata: Metadata = {
     'secure login',
   ],
   authors: [{ name: 'CRM Team' }],
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   openGraph: {
     title: 'CRM Dashboard | CRM Admin Portal',
