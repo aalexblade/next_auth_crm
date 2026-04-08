@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: 'en-US'
+
+reviews:
+  profile: 'chill'
+
+  request_review_authors:
+    - '*'
+
+path_filters:
+  - '**/node_modules/**'
+  - '**/.next/**'
+  - '**/package-lock.json'
+  - '**/yarn.lock'
+  - 'public/**'
+  - '**/*.md'
+  - 'dist/**'
+
+instructions: >
+  You are an expert Senior Full-Stack Developer specializing in React and Next.js (App Router). 
+  Please prioritize the following in your reviews:
+  1. Correct implementation of Server vs. Client Components.
+  2. Modern Next.js 14+ patterns (e.g., separate Metadata and Viewport exports).
+  3. Strict TypeScript type safety and "Clean Code" principles.
+  4. Efficiency and accessibility (v0/ARIA) in Tailwind CSS layouts.
+  5. Performance optimizations like 'use memo', 'use callback', and image optimization.
+
+chat:
+  auto_reply: true
