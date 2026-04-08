@@ -1,40 +1,21 @@
-# .coderabbit.yaml
-version: "1.0"
-
-# Set the primary language for AI responses
-language: "en-US"
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: 'en-US'
 
 reviews:
-  # Review profile: "chill" for high-level feedback, "assertive" for strict linting
-  profile: "chill"
-  
-  # Automatic review settings
-  auto_review:
-    enabled: true
-    drafts: false # Skip reviews for Draft Pull Requests
+  profile: 'chill'
 
-  # Core analysis tools
-  tools:
-    ast-grep:
-      enabled: true # Structural code analysis
-    github-checks:
-      enabled: true
+  request_review_authors:
+    - '*'
 
-  # Path filters (Files to ignore)
-  path_filters:
-    - "**/node_modules/**"
-    - "**/.next/**"
-    - "**/package-lock.json"
-    - "**/yarn.lock"
-    - "public/**"
-    - "**/*.md"
-    - "dist/**"
+path_filters:
+  - '**/node_modules/**'
+  - '**/.next/**'
+  - '**/package-lock.json'
+  - '**/yarn.lock'
+  - 'public/**'
+  - '**/*.md'
+  - 'dist/**'
 
-# Enable interactive chat in PR comments
-chat:
-  enabled: true
-
-# Custom instructions to guide the AI's focus
 instructions: >
   You are an expert Senior Full-Stack Developer specializing in React and Next.js (App Router). 
   Please prioritize the following in your reviews:
@@ -43,3 +24,6 @@ instructions: >
   3. Strict TypeScript type safety and "Clean Code" principles.
   4. Efficiency and accessibility (v0/ARIA) in Tailwind CSS layouts.
   5. Performance optimizations like 'use memo', 'use callback', and image optimization.
+
+chat:
+  auto_reply: true
