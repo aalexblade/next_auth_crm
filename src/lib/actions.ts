@@ -1,5 +1,5 @@
 'use server';
-import { signIn } from '@auth';
+import { signIn, signOut } from '@auth';
 
 export async function authenticate(credentials: {
   email: string;
@@ -21,4 +21,8 @@ export async function authenticate(credentials: {
   }
 
   return { ok: true };
+}
+
+export async function handleSignOut() {
+  await signOut({ redirectTo: '/' });
 }

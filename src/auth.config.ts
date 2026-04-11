@@ -17,14 +17,16 @@ export const authConfig = {
       request: { nextUrl: URL };
     }) {
       const isLoggedIn = !!auth?.user;
+      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
       const isOnAdmin =
-        nextUrl.pathname.startsWith('/dashboard') ||
-        nextUrl.pathname.startsWith('/companies');
+        isOnDashboard || nextUrl.pathname.startsWith('/companies');
 
       if (isOnAdmin) {
         if (isLoggedIn) return true;
+        // Redirect unauthenticated users to login page
         return false;
-      } else if (isLoggedIn) {
+      } else if (isLoggedIn && nextUrl.pathname === '/login') {
+        // Redirect authenticated users to dashboard if they try to access login page
         return Response.redirect(new URL('/dashboard', nextUrl));
       }
       return true;
