@@ -1,0 +1,54 @@
+rules:
+  - id: react-dangerously-set-inner-html
+    pattern: |
+      <$W dangerouslySetInnerHTML={{__html: ...}} />
+    message: "Potential XSS: Detected use of dangerouslySetInnerHTML. Ensure the input is properly sanitized."
+    languages: [javascript, typescript, jsx, tsx]
+    severity: ERROR
+
+  - id: nextjs-use-client-placement
+    pattern-either:
+      - pattern: |
+          function $F(...) {
+            "use client";
+            ...
+          }
+      - pattern: |
+          const $F = (...) => {
+            "use client";
+            ...
+          }
+    message: "'use client' directive should be at the top of the file, not inside a function."
+    languages: [javascript, typescript, jsx, tsx]
+    severity: WARNING
+
+  - id: nextjs-use-server-placement
+    pattern-either:
+      - pattern: |
+          function $F(...) {
+            "use server";
+            ...
+          }
+      - pattern: |
+          const $F = (...) => {
+            "use server";
+            ...
+          }
+    message: "'use server' directive is allowed inside functions only for server actions. Ensure this is intended and secure."
+    languages: [javascript, typescript, jsx, tsx]
+    severity: INFO
+
+  - id: javascript-eval-check
+    pattern: eval(...)
+    message: "Avoid using eval(). It is a security risk and can lead to code injection."
+    languages: [javascript, typescript, jsx, tsx]
+    severity: ERROR
+
+  - id: insecure-console-log
+    pattern: console.log(..., $VAR, ...)
+    metavariable-regex:
+      metavariable: $VAR
+      regex: "(?i)(password|secret|token|key|auth|credential)"
+    message: "Potential leak of sensitive information in console.log."
+    languages: [javascript, typescript, jsx, tsx]
+    severity: WARNING

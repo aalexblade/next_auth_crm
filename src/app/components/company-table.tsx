@@ -5,9 +5,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter, usePathname } from 'next/navigation';
 import { getCompanies, PAGE_SIZE } from '@/lib/api';
 import CompanyRow from '@/app/components/company-row';
+import Pagination from '@/app/components/pagination';
 
 export interface CompanyTableProps {
   page: number;
+  query?: string;
 }
 
 const headers = [
@@ -17,6 +19,7 @@ const headers = [
   'Promotion',
   'Country',
   'Joined date',
+  '',
 ];
 
 function CompanyTableSkeleton() {
@@ -48,24 +51,24 @@ function CompanyTableSkeleton() {
   );
 }
 
-export default function CompanyTable({ page }: CompanyTableProps) {
+export default function CompanyTable({ page, query }: CompanyTableProps) {
   const router = useRouter();
   const pathname = usePathname();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['companies', { page, limit: PAGE_SIZE }],
-    queryFn: () =>
-      getCompanies({ page: String(page), limit: String(PAGE_SIZE) }),
+    queryKey: ['companies', { page, limit: PAGE_SIZE, search: query }],
+    queryFn: () => getCompanies({ page, limit: PAGE_SIZE, search: query }),
     staleTime: 10 * 1000,
   });
 
   const navigateTo = (newPage: number) => {
-    router.push(`${pathname}?page=${newPage}`);
+    const params = new URLSearchParams();
+    params.set('page', String(newPage));
+    if (query) {
+      params.set('query', query);
+    }
+    router.push(`${pathname}?${params.toString()}`);
   };
-
-  const hasPrev = page > 1;
-  // Disable "Next" when the current page returned fewer items than PAGE_SIZE
-  const hasNext = (data?.length ?? 0) >= PAGE_SIZE;
 
   if (isLoading) {
     return <CompanyTableSkeleton />;
@@ -91,25 +94,11 @@ export default function CompanyTable({ page }: CompanyTableProps) {
       </table>
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-center gap-4 mt-6">
-        <button
-          onClick={() => navigateTo(page - 1)}
-          disabled={!hasPrev}
-          className="px-4 py-2 text-sm rounded bg-white shadow disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50"
-        >
-          ← Previous
-        </button>
-
-        <span className="text-sm text-gray-600 font-medium">Page {page}</span>
-
-        <button
-          onClick={() => navigateTo(page + 1)}
-          disabled={!hasNext}
-          className="px-4 py-2 text-sm rounded bg-white shadow disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-50"
-        >
-          Next →
-        </button>
-      </div>
+      <Pagination
+        currentPage={page}
+        totalPages={0} // MockAPI doesn't return total pages easily
+        onPageChange={navigateTo}
+      />
     </div>
   );
 }

@@ -92,11 +92,25 @@ const PAGE_SIZE = 10;
 export { PAGE_SIZE };
 
 export const getCompanies = (
-  params: Record<string, string> = {},
+  {
+    search,
+    page,
+    limit,
+    ...params
+  }: {
+    search?: string;
+    page?: number;
+    limit?: number;
+  } & Record<string, string> = {},
   init?: RequestInit,
 ) => {
+  const queryParams: Record<string, string> = { ...params };
+  if (search) queryParams.search = search;
+  if (page) queryParams.page = String(page);
+  if (limit) queryParams.limit = String(limit);
+
   return sendRequest<Company[]>(
-    `${buildUrl('companies')}?${stringifyQueryParams(params)}`,
+    `${buildUrl('companies')}?${stringifyQueryParams(queryParams)}`,
     init,
   );
 };

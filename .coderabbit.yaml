@@ -3,6 +3,10 @@ language: 'en-US'
 
 reviews:
   profile: 'chill'
+  auto_review:
+    enabled: true
+    base_branches:
+      - ".*"
 
   request_review_authors:
     - '*'

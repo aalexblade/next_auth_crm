@@ -3,25 +3,43 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getCompanies, PAGE_SIZE } from '@/lib/api';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import dynamic from 'next/dynamic';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  page: yup.number().integer().min(1).default(1),
+  query: yup.string().max(50).default(''),
+});
 
 export interface PageProps {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{
+    page?: string;
+    query?: string;
+  }>;
 }
 
 const CompanyTable = dynamic(() => import('@/app/components/company-table'));
 
 export default async function Page({ searchParams }: PageProps) {
-  // 1. Розгортаємо параметри
   const params = await searchParams;
 
-  const page = Number(params.page ?? '1');
+  let validated;
+  try {
+    validated = await schema.validate({
+      page: params.page ? Number(params.page) : undefined,
+      query: params.query,
+    });
+  } catch (error) {
+    validated = { page: 1, query: '' };
+  }
+
+  const { page, query } = validated;
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['companies', { page, limit: PAGE_SIZE }],
+    queryKey: ['companies', { page, limit: PAGE_SIZE, search: query }],
     queryFn: () =>
       getCompanies(
-        { page: String(page), limit: String(PAGE_SIZE) },
+        { page, limit: PAGE_SIZE, search: query },
         { cache: 'no-store' },
       ),
     staleTime: 10 * 1000,
@@ -31,7 +49,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <CompanyTable page={page} />
+      <CompanyTable page={page} query={query} />
     </HydrationBoundary>
   );
 }
