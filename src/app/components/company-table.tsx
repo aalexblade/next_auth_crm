@@ -3,7 +3,8 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter, usePathname } from 'next/navigation';
-import { getCompanies, PAGE_SIZE } from '@/lib/api';
+import { PAGE_SIZE } from '@/lib/api';
+import { fetchCompanies } from '@/lib/actions';
 import CompanyRow from '@/app/components/company-row';
 import Pagination from '@/app/components/pagination';
 
@@ -57,7 +58,7 @@ export default function CompanyTable({ page, query }: CompanyTableProps) {
 
   const { data, isLoading } = useQuery({
     queryKey: ['companies', { page, limit: PAGE_SIZE, search: query }],
-    queryFn: () => getCompanies({ page, limit: PAGE_SIZE, search: query }),
+    queryFn: () => fetchCompanies({ page, limit: PAGE_SIZE, search: query }),
     staleTime: 10 * 1000,
   });
 

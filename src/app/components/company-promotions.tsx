@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getPromotions } from '@/lib/api';
+import { fetchPromotions } from '@/lib/actions';
 import Promotion from '@/app/components/promotion';
 
 export interface CompanyPromotionsProps {
@@ -14,7 +14,7 @@ export default function CompanyPromotions({
 }: CompanyPromotionsProps) {
   const { data } = useQuery({
     queryKey: ['promotions', companyId],
-    queryFn: () => getPromotions({ companyId }),
+    queryFn: () => fetchPromotions({ companyId }),
     staleTime: 10 * 1000,
   });
 

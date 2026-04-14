@@ -7,8 +7,10 @@ reviews:
     enabled: true
     base_branches:
       - '.*'
-  # Фільтри та інструкції тепер мають бути ТУТ (всередині reviews)
   path_filters:
+    - '!src/**/*' # Явно включаємо все в src
+    - '!tsconfig.json' # Включаємо конфіг TS
+    - '!.env.example' # Включаємо приклад енвів для перевірки безпеки
     - '**/node_modules/**'
     - '**/.next/**'
     - '**/package-lock.json'
@@ -18,12 +20,13 @@ reviews:
     - 'dist/**'
   instructions: >
     You are an expert Senior Full-Stack Developer specializing in React and Next.js 15 (App Router). 
+    IMPORTANT: You must review files in src/lib and src/app. 
     Please prioritize:
     1. Next.js 15 patterns (specifically async searchParams and params).
-    2. Correct Server vs. Client Components usage.
-    3. Proper error handling in Server Actions.
-    4. TypeScript strict safety and Clean Code.
-    5. Tailwind CSS efficiency and accessibility.
+    2. Session validation in Server Actions (auth() checks in src/lib/actions.ts).
+    3. Proper environment variable usage (no NEXT_PUBLIC_ for sensitive tokens).
+    4. Correct Server vs. Client Components usage.
+    5. TypeScript strict safety and Clean Code.
 
 chat:
   auto_reply: true
