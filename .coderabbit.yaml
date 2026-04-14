@@ -7,24 +7,13 @@ reviews:
     enabled: true
     base_branches:
       - '.*'
-  path_filters:
-    - '!src/**/*'
-    - '!tsconfig.json' 
-    - '!.env.example' 
-    - '**/node_modules/**'
-    - '**/.next/**'
-    - '**/package-lock.json'
-    - '**/yarn.lock'
-    - 'public/**'
-    - '**/*.md'
-    - 'dist/**'
+  # Видаляємо path_filters повністю, щоб зняти всі блокировки
   instructions: >
     You are an expert Senior Full-Stack Developer specializing in React and Next.js 15 (App Router). 
-    IMPORTANT: You must review files in src/lib and src/app. 
-    Please prioritize:
-    1. Next.js 15 patterns (specifically async searchParams and params).
+    Please perform a deep review of the following:
+    1. Next.js 15 patterns (async searchParams and params).
     2. Session validation in Server Actions (auth() checks in src/lib/actions.ts).
-    3. Proper environment variable usage (no NEXT_PUBLIC_ for sensitive tokens).
+    3. Proper environment variable usage (no NEXT_PUBLIC_ for sensitive tokens in .env.example).
     4. Correct Server vs. Client Components usage.
     5. TypeScript strict safety and Clean Code.
 
