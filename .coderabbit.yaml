@@ -7,15 +7,17 @@ reviews:
     enabled: true
     base_branches:
       - '.*'
-  # Видаляємо path_filters повністю, щоб зняти всі блокировки
   instructions: >
-    You are an expert Senior Full-Stack Developer specializing in React and Next.js 15 (App Router). 
-    Please perform a deep review of the following:
-    1. Next.js 15 patterns (async searchParams and params).
-    2. Session validation in Server Actions (auth() checks in src/lib/actions.ts).
-    3. Proper environment variable usage (no NEXT_PUBLIC_ for sensitive tokens in .env.example).
-    4. Correct Server vs. Client Components usage.
-    5. TypeScript strict safety and Clean Code.
+    You are an expert Senior Full-Stack Developer specializing in Next.js 15/16 (App Router) and NextAuth v5.
+    
+    Please prioritize the following in your reviews:
+    1. **Security & Server Actions**: Ensure all functions in `src/lib/actions.ts` (our data bridge) contain an `auth()` check. No data should be fetched from the client without going through a secure Server Action.
+    2. **Environment Variables**: Verify that `API_TOKEN` is NEVER prefixed with `NEXT_PUBLIC_`. It must only be used on the server to prevent exposure.
+    3. **Next.js 15/16 Patterns**: Confirm that `params` and `searchParams` in Page components are treated as Promises (e.g., `await searchParams`).
+    4. **Middleware**: Ensure the file is named `middleware.ts` (not `proxy.ts`) and follows the standard Next.js 15 export pattern.
+    5. **NextAuth v5**: Use the latest beta patterns (e.g., `auth()` from `@auth` instead of `getServerSession`).
+    6. **React Query Hydration**: Verify that Server Components use `dehydrate` and `HydrationBoundary` with `getQueryClient` for prefetching data to Client Components.
+    7. **TypeScript & Clean Code**: Enforce strict typing, especially for API responses and Server Action results.
 
 chat:
   auto_reply: true
