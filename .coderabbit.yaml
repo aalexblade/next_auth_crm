@@ -6,28 +6,28 @@ reviews:
   auto_review:
     enabled: true
     base_branches:
-      - ".*"
-
-  request_review_authors:
-    - '*'
-
-path_filters:
-  - '**/node_modules/**'
-  - '**/.next/**'
-  - '**/package-lock.json'
-  - '**/yarn.lock'
-  - 'public/**'
-  - '**/*.md'
-  - 'dist/**'
-
-instructions: >
-  You are an expert Senior Full-Stack Developer specializing in React and Next.js (App Router). 
-  Please prioritize the following in your reviews:
-  1. Correct implementation of Server vs. Client Components.
-  2. Modern Next.js 14+ patterns (e.g., separate Metadata and Viewport exports).
-  3. Strict TypeScript type safety and "Clean Code" principles.
-  4. Efficiency and accessibility (v0/ARIA) in Tailwind CSS layouts.
-  5. Performance optimizations like 'use memo', 'use callback', and image optimization.
+      - '.*'
+  # Переносимо path_filters сюди (згідно з актуальною схемою v2)
+  path_filters:
+    - '**/node_modules/**'
+    - '**/.next/**'
+    - '**/package-lock.json'
+    - '**/yarn.lock'
+    - 'public/**'
+    - '**/*.md'
+    - 'dist/**'
+  # Переносимо instructions сюди
+  instructions: >
+    You are an expert Senior Full-Stack Developer specializing in React and Next.js 15 (App Router). 
+    Please prioritize:
+    1. Next.js 15 patterns (specifically async searchParams and params).
+    2. Correct Server vs. Client Components usage.
+    3. Proper error handling in Server Actions.
+    4. TypeScript strict safety and Clean Code.
+    5. Tailwind CSS efficiency and accessibility.
 
 chat:
   auto_reply: true
+
+request_review_authors:
+  - '*'
