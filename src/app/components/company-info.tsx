@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
-import { getCompany } from '@/lib/api';
+import { fetchCompany } from '@/lib/actions';
 import StatusLabel from '@/app/components/status-label';
 
 export interface CompanyInfoProps {
@@ -13,7 +13,7 @@ export interface CompanyInfoProps {
 export default function CompanyInfo({ companyId }: CompanyInfoProps) {
   const { data: company } = useQuery({
     queryKey: ['companies', companyId],
-    queryFn: () => getCompany(companyId),
+    queryFn: () => fetchCompany(companyId),
     staleTime: 10 * 1000,
   });
 

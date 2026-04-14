@@ -28,10 +28,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/auth.ts", 
+    "src/auth.ts",
     "src/auth.config.ts",
     "src/middleware.ts",
     ".next/dev/types/**/*.ts"
+
   ],
   "exclude": ["node_modules"]
 }

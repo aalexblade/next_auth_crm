@@ -3,7 +3,8 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createPromotion, getCompany, Promotion } from '@/lib/api';
+import { Promotion } from '@/lib/api';
+import { createNewPromotion, fetchCompany } from '@/lib/actions';
 import Button from '@/app/components/button';
 import InputField from '@/app/components/input-field';
 import LogoUploader from '@/app/components/logo-uploader';
@@ -33,22 +34,26 @@ export default function PromotionForm({
 
   const { data: company } = useQuery({
     queryKey: ['companies', companyId],
-    queryFn: () => getCompany(companyId),
+    queryFn: () => fetchCompany(companyId),
     staleTime: 10 * 1000,
     enabled: Boolean(companyId),
   });
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: Omit<Promotion, 'id'>) => createPromotion(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['promotions', companyId],
-      });
+    mutationFn: (data: Omit<Promotion, 'id'>) => createNewPromotion(data),
+    onSuccess: (result) => {
+      if (result.success) {
+        queryClient.invalidateQueries({
+          queryKey: ['promotions', companyId],
+        });
 
-      queryClient.invalidateQueries({
-        queryKey: ['promotions'],
-        exact: true,
-      });
+        queryClient.invalidateQueries({
+          queryKey: ['promotions'],
+          exact: true,
+        });
+      } else {
+        alert(`Error: ${result.error}`);
+      }
     },
   });
 

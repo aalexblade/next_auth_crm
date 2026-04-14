@@ -3,13 +3,12 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Company, CompanyStatus } from '@/lib/api';
 import {
-  Company,
-  CompanyStatus,
-  createCompany,
-  getCategories,
-  getCountries,
-} from '@/lib/api';
+  createNewCompany,
+  fetchCategories,
+  fetchCountries,
+} from '@/lib/actions';
 import Button from '@/app/components/button';
 import InputField from '@/app/components/input-field';
 import LogoUploader from '@/app/components/logo-uploader';
@@ -42,23 +41,27 @@ export default function CompanyForm({ onSubmit }: CompanyFormProps) {
 
   const { data: categories } = useQuery({
     queryKey: ['categories'],
-    queryFn: getCategories,
+    queryFn: fetchCategories,
     staleTime: 10 * 1000,
   });
 
   const { data: countries } = useQuery({
     queryKey: ['countries'],
-    queryFn: getCountries,
+    queryFn: fetchCountries,
     staleTime: 10 * 1000,
   });
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: Omit<Company, 'id' | 'hasPromotions'>) =>
-      createCompany(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['companies'],
-      });
+      createNewCompany(data),
+    onSuccess: (result) => {
+      if (result.success) {
+        queryClient.invalidateQueries({
+          queryKey: ['companies'],
+        });
+      } else {
+        alert(`Error: ${result.error}`);
+      }
     },
   });
 

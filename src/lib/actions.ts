@@ -1,14 +1,88 @@
 'use server';
 
-import { signIn, signOut } from '@auth';
+import { auth, signIn, signOut } from '@auth';
 import { revalidatePath } from 'next/cache';
+import * as api from '@/lib/api';
 
-const PROJECT_TOKEN = process.env.NEXT_PUBLIC_PROJECT_TOKEN;
+export async function fetchCountries() {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getCountries();
+}
+
+export async function fetchCategories() {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getCategories();
+}
+
+export async function fetchCompanies(params: any) {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getCompanies(params);
+}
+
+export async function fetchPromotions(params: any) {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getPromotions(params);
+}
+
+export async function fetchSummaryStats() {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getSummaryStats();
+}
+
+export async function fetchSummarySales() {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getSummarySales();
+}
+
+export async function fetchCompany(id: string) {
+  const session = await auth();
+  if (!session) throw new Error('Unauthorized');
+  return api.getCompany(id);
+}
+
+export async function createNewPromotion(data: Omit<api.Promotion, 'id'>) {
+  try {
+    const session = await auth();
+    if (!session) throw new Error('Unauthorized');
+
+    await api.createPromotion(data);
+    revalidatePath('/dashboard');
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function createNewCompany(
+  data: Omit<api.Company, 'id' | 'hasPromotions'>,
+) {
+  try {
+    const session = await auth();
+    if (!session) throw new Error('Unauthorized');
+
+    await api.createCompany(data);
+    revalidatePath('/companies');
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
 
 export async function deleteCompany(id: string) {
   try {
+    const session = await auth();
+    if (!session) {
+      throw new Error('Unauthorized');
+    }
+
     const res = await fetch(
-      `https://${PROJECT_TOKEN}.mockapi.io/api/v1/companies/${id}`,
+      `https://${process.env.API_TOKEN}.mockapi.io/api/v1/companies/${id}`,
       {
         method: 'DELETE',
       },
