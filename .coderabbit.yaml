@@ -7,7 +7,7 @@ reviews:
     enabled: true
     base_branches:
       - '.*'
-  # Переносимо path_filters сюди (згідно з актуальною схемою v2)
+  # Фільтри та інструкції тепер мають бути ТУТ (всередині reviews)
   path_filters:
     - '**/node_modules/**'
     - '**/.next/**'
@@ -16,7 +16,6 @@ reviews:
     - 'public/**'
     - '**/*.md'
     - 'dist/**'
-  # Переносимо instructions сюди
   instructions: >
     You are an expert Senior Full-Stack Developer specializing in React and Next.js 15 (App Router). 
     Please prioritize:
@@ -28,6 +27,3 @@ reviews:
 
 chat:
   auto_reply: true
-
-request_review_authors:
-  - '*'
