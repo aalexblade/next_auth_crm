@@ -8,9 +8,9 @@ reviews:
     base_branches:
       - '.*'
   path_filters:
-    - '!src/**/*' # Явно включаємо все в src
-    - '!tsconfig.json' # Включаємо конфіг TS
-    - '!.env.example' # Включаємо приклад енвів для перевірки безпеки
+    - '!src/**/*'
+    - '!tsconfig.json' 
+    - '!.env.example' 
     - '**/node_modules/**'
     - '**/.next/**'
     - '**/package-lock.json'
