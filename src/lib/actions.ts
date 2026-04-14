@@ -1,14 +1,19 @@
 'use server';
 
-import { signIn, signOut } from '@auth';
+import { auth, signIn, signOut } from '@auth';
 import { revalidatePath } from 'next/cache';
 
-const PROJECT_TOKEN = process.env.NEXT_PUBLIC_PROJECT_TOKEN;
+const API_TOKEN = process.env.API_TOKEN;
 
 export async function deleteCompany(id: string) {
   try {
+    const session = await auth();
+    if (!session) {
+      throw new Error('Unauthorized');
+    }
+
     const res = await fetch(
-      `https://${PROJECT_TOKEN}.mockapi.io/api/v1/companies/${id}`,
+      `https://${API_TOKEN}.mockapi.io/api/v1/companies/${id}`,
       {
         method: 'DELETE',
       },
