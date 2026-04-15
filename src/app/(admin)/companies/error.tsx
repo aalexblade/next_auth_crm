@@ -1,14 +1,19 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@/app/components/button';
 
 export interface ErrorProps {
-  error: Error;
+  error: Error & { digest?: string };
   reset: () => void;
 }
 
 export default function Error({ error, reset }: ErrorProps) {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] p-8 bg-gray-50 rounded-lg shadow-sm border border-gray-200 mt-10 mx-10">
       <div className="bg-red-50 text-red-700 p-4 rounded-full mb-6">
@@ -31,7 +36,8 @@ export default function Error({ error, reset }: ErrorProps) {
         Something went wrong!
       </h2>
       <p className="text-gray-600 mb-8 text-center max-w-md">
-        {error.message || 'An unexpected error occurred while fetching the companies data. Please try again or contact support if the problem persists.'}
+        An unexpected error occurred while fetching companies. Please try again
+        or contact support.
       </p>
       <Button onClick={() => reset()} className="min-w-[120px]">
         Try again
