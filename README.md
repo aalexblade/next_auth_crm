@@ -28,15 +28,28 @@ The login flow is implemented using **NextAuth v5 beta** with a credentials prov
 
 ## Tech Stack
 
-- **Next.js 14** (App Router)
-- **TypeScript**
-- **React 18**
-- **Tailwind CSS** for styling
-- **NextAuth** for authentication
-- **Formik** + **Yup** for form handling and validation
-- **React Query** for client-side data fetching and caching
-- **Headless UI** for accessible UI primitives
-- **clsx** for conditional class names
+- **Next.js 15** - Utilizing the latest App Router features
+- **TypeScript 5** - For type-safe development and improved developer experience
+- **React 18** - Modern UI development with concurrent features
+- **Tailwind CSS 3** - Utility-first CSS framework for rapid and consistent styling
+- **NextAuth.js v5 (Beta)** - Flexible and secure authentication with session management
+- **TanStack Query (React Query) v5** - Advanced data fetching, caching, and state synchronization
+- **Formik 2 + Yup 1** - Robust form handling with schema-based validation
+- **Headless UI 1** - Completely unstyled, fully accessible UI primitives
+- **clsx 2** - Lightweight utility for constructing conditional `className` strings
+- **MockAPI.io** - RESTful backend simulation for development and testing
+
+## Architecture
+
+This project follows a modern, scalable architecture leveraging the full capabilities of the **Next.js App Router**:
+
+- **App Router & Layouts:** Hierarchical layout system for shared UI components across different segments of the application.
+- **Parallel & Intercepting Routes:** Extensive use of Parallel Routes (`@modal`, `@header`, `@toolbar`) and Intercepting Routes (`(.)new`) to create complex, modal-driven interfaces that preserve browser history and state.
+- **Route Groups:** Organized administrative sections under the `(admin)` group to manage shared layouts and middleware logic cleanly.
+- **Hybrid Component Model:** Strategic use of **Server Components** for data fetching and performance, combined with **Client Components** for rich interactivity and local state management.
+- **Edge-Ready Authentication:** Route protection implemented at the edge using `middleware.ts` and NextAuth.js for low-latency security checks.
+- **Typed API Layer:** Centralized, type-safe data fetching utilities in `src/lib/api.ts` designed to work seamlessly with TanStack Query.
+- **Declarative Form Management:** Centralized form logic using Formik, ensuring consistent validation and submission patterns across the CRM.
 
 ## Project Structure
 

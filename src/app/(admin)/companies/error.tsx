@@ -3,19 +3,19 @@
 import React, { useEffect } from 'react';
 import Button from '@/app/components/button';
 
-export interface ErrorComponentProps {
+export interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
 }
 
-export default function ErrorComponent({ error, reset }: ErrorComponentProps) {
+export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg shadow-sm border border-gray-200 mt-10">
+    <div className="flex flex-col items-center justify-center min-h-[400px] p-8 bg-gray-50 rounded-lg shadow-sm border border-gray-200 mt-10 mx-10">
       <div className="bg-red-50 text-red-700 p-4 rounded-full mb-6">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +36,8 @@ export default function ErrorComponent({ error, reset }: ErrorComponentProps) {
         Something went wrong!
       </h2>
       <p className="text-gray-600 mb-8 text-center max-w-md">
-        An unexpected error occurred while loading the dashboard. Please try
-        again or contact support.
+        An unexpected error occurred while fetching companies. Please try again
+        or contact support.
       </p>
       <Button onClick={() => reset()} className="min-w-[120px]">
         Try again
