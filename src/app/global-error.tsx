@@ -46,6 +46,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             recover. Please try again or refresh the page.
           </p>
           <button
+            type="button"
             onClick={() => reset()}
             className="py-2.5 px-6 bg-gray-900 text-white font-medium rounded hover:bg-gray-800 transition-colors"
           >
