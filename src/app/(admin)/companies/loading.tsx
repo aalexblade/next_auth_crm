@@ -13,6 +13,9 @@ const headers = [
 export default function Loading() {
   return (
     <div className="py-8 px-10 bg-gray-100 min-h-screen">
+      <div role="status" aria-live="polite" className="sr-only">
+        Loading companies...
+      </div>
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-separate border-spacing-y-2">
           <thead>

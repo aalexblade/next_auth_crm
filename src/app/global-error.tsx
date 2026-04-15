@@ -16,7 +16,12 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   return (
     <html>
       <body className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-xl border border-gray-200 max-w-lg mx-4">
+        <div
+          role="alert"
+          aria-labelledby="error-title"
+          aria-describedby="error-desc"
+          className="flex flex-col items-center p-8 bg-white rounded-lg shadow-xl border border-gray-200 max-w-lg mx-4"
+        >
           <div className="bg-red-50 text-red-700 p-4 rounded-full mb-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -33,10 +38,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 id="error-title" className="text-3xl font-bold text-gray-900 mb-2">
             Critical Error
           </h1>
-          <p className="text-gray-600 mb-8 text-center">
+          <p id="error-desc" className="text-gray-600 mb-8 text-center">
             A critical error has occurred and the application was unable to
             recover. Please try again or refresh the page.
           </p>
