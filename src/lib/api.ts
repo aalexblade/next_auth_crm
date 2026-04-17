@@ -54,10 +54,8 @@ export interface Promotion {
   avatar?: string;
 }
 
-const API_TOKEN = process.env.API_TOKEN;
-
 const buildUrl = (...paths: string[]) =>
-  `https://${API_TOKEN}.mockapi.io/api/v1/${paths.join('/')}`;
+  `https://${process.env.API_TOKEN}.mockapi.io/api/v1/${paths.join('/')}`;
 
 const stringifyQueryParams = (params: Record<string, string>) =>
   new URLSearchParams(params).toString();
@@ -101,7 +99,7 @@ export const getCompanies = (
     search?: string;
     page?: number;
     limit?: number;
-  } & Record<string, string> = {},
+  } & Record<string, any> = {},
   init?: RequestInit,
 ) => {
   const queryParams: Record<string, string> = { ...params };
